@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { DragSource } from 'react-dnd';
-
-const DATA_TYPES = {
-  FIELD_DATA: 'fieldData'
-};
+import { TYPES } from './Template';
 
 const fieldDataSrc = {
   beginDrag(props) {
@@ -44,4 +41,4 @@ class FieldData extends Component {
   }
 }
 
-export default DragSource(DATA_TYPES.FIELD_DATA, fieldDataSrc, collect)(FieldData);
+export default DragSource(TYPES.FIELD, fieldDataSrc, collect)(FieldData);

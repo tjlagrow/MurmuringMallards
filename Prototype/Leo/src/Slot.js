@@ -1,27 +1,30 @@
 import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
 import FieldData from './fieldData';
-
-const SLOT_TYPES = {
-  DATA_FIELD: 'dataField'
-};
+import { TYPES } from './Template';
 
 const slotTarget = { 
 	canDrop(props) {
 		console.log(props.id);
+		console.log("test99");
 		return props.id !== 0; 
   	},
 	drop(props, monitor, component) {
       
 	const dragged = monitor.getItem();
-      component.setState({id: dragged.id});
+      console.log("test445");
+      console.log("ID: "+ dragged.id);
+	component.setState({id: dragged.id});
 
+      console.log("Component.state.id: "+ component.state.id);
       return { id:dragged.id };
   }
 };
 
 function collect(connect, monitor) {
-  return {
+  
+	console.log("test7765")
+	return {
     connectDropTarget: connect.dropTarget(),
     canDrop: monitor.canDrop(),
     result: monitor.getDropResult()
@@ -29,9 +32,9 @@ function collect(connect, monitor) {
 }
 
 function fillSlot(id) {
-		switch(id){
-			case 0:
-				return (<div>
+		console.log("fillSlotGot: " +id);
+		if(id == 0){
+				return (<div >
                           <div style={{diplay:'inline-block', background:'#CFD8DC'}}>
                           <img src="./img/logo.png" height="60px" style={{marginTop: '10px', paddingBottom:'12px', paddingLeft:'10px'}} />
                           <FieldData id='0' text='Pitch Comparison' />
@@ -40,8 +43,32 @@ function fillSlot(id) {
                           <FieldData id='3' text='Tweet-A-Stat' />
                         </div>
                       </div>);
-				break;
-			default:
+		} else if(id == 1) {
+				return (
+					<div style={{background:'#CFD8DC', height:'30'}} >
+                          		<p>1</p>
+					</div>
+                          	);
+		} else if(id == 2) {
+				return (
+					<div>
+                          		<p>2</p>
+					</div>
+					);
+		} else if(id == 3) {
+				return (
+					<div>
+                          		<p>3</p>
+					</div>
+					);
+		} else if(id == 4) {
+				return (
+                      		<div>
+                          		<p>4</p>
+					</div>
+					);
+
+		} else {	
 				return(
 				<div height="100%"><p style={{margin: '0',height:'100%', textAlign: 'center',
 					verticalAalign: 'middle', lineHeight:'25', border: '1px solid #000000',
@@ -49,7 +76,6 @@ function fillSlot(id) {
 									X</p>
 				</div>
 				);
-				break;
 		}
 }
 
@@ -82,5 +108,5 @@ class Slot extends Component {
   }
 }
 
-export default DropTarget(SLOT_TYPES.DATA_FIELD, slotTarget, collect)(Slot);
+export default DropTarget(TYPES.FIELD, slotTarget, collect)(Slot);
 
